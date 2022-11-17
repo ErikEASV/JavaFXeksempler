@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,8 +30,9 @@ public class ListViewTest2 extends Application  {
         listView.getItems().add("Banan");
         listView.getItems().add("Æble");
 
-        // Vælg flere fra listen - virker ikke med "fjern".
-        //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // Eksperiment...
+        //Frugt f = new Frugt("papaya");
+        //listView.getItems().add(f);
 
         // Vi sætter en knap på, som kan fortælle, hvad der er valgt i listen
         Button button = new Button("Vis valgte frugt(er)");
@@ -41,7 +43,7 @@ public class ListViewTest2 extends Application  {
             else
                 for (Object indeks : valgteIndeks){
                     System.out.println("Valgt index = " + indeks + " : " + listView.getItems().get((int) indeks));
-            }
+                }
         });
 
         // Vi sætter en knap mere på, som tilføjer tilfældige frugter
@@ -61,13 +63,22 @@ public class ListViewTest2 extends Application  {
                 System.out.println("Der er ikke valgte noget");
             else
                 for (Object indeks : valgteIndeks) {
+                    listView.scrollTo(indeks); // Prøver at scrolle til det rigtige sted...
                     System.out.println("Valgt index = " + indeks + " : " + listView.getItems().get((int) indeks));
                     listView.getItems().remove((int) indeks);
                 }
         });
 
+        // Sortering af frugter
+        Button button4 = new Button("Sortér frugter");
+        button4.setOnAction(event -> {
+            List<String> sorteretListe = new ArrayList<>();
+            sorteretListe = listView.getItems();
+            Collections.sort(sorteretListe);
+        });
+
         // Vi sætter vinduet op med listeviewet og knapperne
-        VBox vBox = new VBox(listView, button, button2, button3);
+        VBox vBox = new VBox(listView, button, button2, button3, button4);
         Scene scene = new Scene(vBox, 300, 220);
         primaryStage.setScene(scene);
         primaryStage.show();
