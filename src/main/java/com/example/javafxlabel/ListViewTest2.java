@@ -2,10 +2,12 @@ package com.example.javafxlabel;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -30,7 +32,7 @@ public class ListViewTest2 extends Application  {
         listView.getItems().add("Banan");
         listView.getItems().add("Æble");
 
-        // Eksperiment...
+        // Eksperiment... man an putte hele objekter på listen, bare de har toString()-metode
         //Frugt f = new Frugt("papaya");
         //listView.getItems().add(f);
 
@@ -75,6 +77,14 @@ public class ListViewTest2 extends Application  {
             List<String> sorteretListe = new ArrayList<>();
             sorteretListe = listView.getItems();
             Collections.sort(sorteretListe);
+        });
+
+        // Reagér på når der bliver klikket på en frugt
+        listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("Der blev klikket på " + listView.getSelectionModel().getSelectedItem());
+            }
         });
 
         // Vi sætter vinduet op med listeviewet og knapperne
